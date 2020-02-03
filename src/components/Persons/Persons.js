@@ -1,6 +1,5 @@
 import React from 'react';
 import Person from './Person/Person';
-import Aux from '../../hoc/Auxilliary';
 
 class Persons extends React.Component {
 
@@ -32,22 +31,14 @@ class Persons extends React.Component {
 
     render() {
     console.log('[Persons.js] rendering...');
-    return (
-        <Aux>
-            { this.props.persons.map((person, index) => 
-                <Person 
-                    key={ person.id } 
-                    click={ () => this.props.deleteHandler(person.id) }
-                    changed={ (event) => this.props.nameChangeHandler(event, person.id) }
-                    name={ person.name } 
-                    age={ person.age }
-                    isAuth={ this.props.isAuthenticated }>
-                    { person.hobbies }
-                </Person>
-                ) }
-        </Aux>
-    );
+    return this.props.persons.map((person, index) => 
+        <Person 
+            key={ person.id } 
+            click={ () => this.props.deleteHandler(person.id) }
+            changed={ (event) => this.props.nameChangeHandler(event, person.id) }
+            name={ person.name } 
+            age={ person.age }>{ person.hobbies }</Person>
+        )
     }
 }
-
 export default Persons;

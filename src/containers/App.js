@@ -4,6 +4,7 @@ import Cockpit from '../components/Cockpit/Cockpit';
 import Persons from '../components/Persons/Persons';
 import withClass from '../hoc/withClass';
 import Aux from '../hoc/Auxilliary';
+import AuthContext from '../context/auth-context';
 import uuid from 'uuid';
 
 class App extends React.Component {
@@ -98,16 +99,20 @@ class App extends React.Component {
             title={ this.props.appTitle }
             personsLength={ this.state.persons.length }
             toggleHandler={ this.togglePersonsHandler }
-            showPersons={ this.state.showPersons }
-            login={ this.loginHandler } />
+            showPersons={ this.state.showPersons } />
       );
     }
 
     return (
         <Aux>
           <button onClick={ () => { this.setState({ showCockpit: !this.state.showCockpit }) } }>Toggle Cockpit</button>
-          { cockpit }
-          { persons }
+          <AuthContext.Provider value={{ 
+            authenticated: this.state.authenticated,
+            login: this.loginHandler
+           }}>
+            { cockpit }
+            { persons }
+          </AuthContext.Provider>
         </Aux>
     );
   }
